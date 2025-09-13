@@ -5,11 +5,6 @@ namespace SotongStudio.Trainee.Service.StatusCalculator
 {
     public static class StatGrowthConfig
     {
-        [Header("S-Curve Parameters")]
-        public const int Midpoint = 50;
-        public const float Steepness = 0.15f;
-        public const int MaxPoint = 380;
-
         public const float InitialGrowthRate = 4f;
         public const float ReductionFactor = 0.0025f;
     }

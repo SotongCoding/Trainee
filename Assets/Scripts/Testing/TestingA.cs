@@ -1,7 +1,10 @@
 using NaughtyAttributes;
 using SotongStudio.Trainee.Service.ExperienceCalculator;
-using SotongStudio.Trainee.Service.StatusCalculator;
+using SotongStudio.Trainee.Service.PotencyGenerator;
+using SotongStudio.Trainee.Shared.Adventure.Class;
+using SotongStudio.Trainee.Shared.Adventure.Rank;
 using SotongStudio.Trainee.Shared.Adventure.Status;
+using SotongStudio.Trainee.Shared.Predifined.ClassConfig;
 using UnityEngine;
 
 namespace SotongStudio.Trainee
@@ -14,6 +17,8 @@ namespace SotongStudio.Trainee
 
         [Header("Stat")]
         [SerializeField] private TestingStat _baseStat;
+
+        [SerializeField] private ClassConfigCollection_SO _classConfigCollection;
 
 
 
@@ -48,6 +53,25 @@ namespace SotongStudio.Trainee
                                       $"MgcAttack {mainStat.MgcAttack} MgcDefense {mainStat.MgcDefense} " +
                                       $"Critical {mainStat.Critical} Speed {mainStat.Speed} Accuracy {mainStat.Accuracy}");
             }
+        }
+
+        [Button]
+        private void TestGeneratePotency()
+        {
+            var generator = new PotencyGeneratorService(_classConfigCollection);
+
+            var potency = generator.GeneratePotency(AdventureRank.E_Class, AdventureClass.BladeMaster);
+
+            Debug.Log($"Potency : " +
+                      $"Health {potency.HealthPotency} " +
+                      $"PysAttack {potency.PysAttackPotency} PysDefense {potency.PysDefensePotency} " +
+                      $"MgcAttack {potency.MgcAttackPotency} MgcDefense {potency.MgcDefensePotency} " +
+                      $"Critical {potency.CriticalPotency} Speed {potency.SpeedPotency} Accuracy {potency.AccuracyPotency}");
+            var allPotency = potency.HealthPotency +
+                             potency.PysAttackPotency + potency.PysDefensePotency +
+                             potency.MgcAttackPotency + potency.MgcDefensePotency +
+                             potency.AccuracyPotency + potency.CriticalPotency + potency.SpeedPotency;
+            Debug.Log($"Total Potency : {allPotency}");
         }
 
         [System.Serializable]
