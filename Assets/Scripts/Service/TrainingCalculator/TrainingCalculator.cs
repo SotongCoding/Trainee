@@ -4,9 +4,9 @@ using UnityEngine;
 
 namespace SotongStudio.Trainee.Service.TrainigCalculator
 {
-    public class TrainingCalculator
+    public static class TrainingCalculator
     {
-        public IAdventureStatus CalculateObtainedStat(IAdventureStatus incrementStat, ITrainingEfficiency currentTrainingEfficient)
+        public static ITrainingResult CalculateObtainedStat(IAdventureStatus incrementStat, ITrainingEfficiency currentTrainingEfficient)
         {
             var health = CalculateSingleStat(incrementStat.Health, currentTrainingEfficient.HealthEfficiency);
 
@@ -27,7 +27,7 @@ namespace SotongStudio.Trainee.Service.TrainigCalculator
                                               critical, speed, accuracy);
         }
 
-        private ushort CalculateSingleStat(ushort incrementStat, float currentEfficient)
+        private static ushort CalculateSingleStat(ushort incrementStat, float currentEfficient)
         {
             var roundEfficient = Mathf.FloorToInt(currentEfficient);
             float bonusPercentage = (float)roundEfficient * 10 / 100;

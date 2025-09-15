@@ -74,7 +74,8 @@ namespace SotongStudio.Trainee.Service.PotencyGenerator
 
             if (potencyPossibilies.Count == 0)
             {
-                Debug.LogError("Failed Get Potency. No Possibility");
+                Debug.LogError($"Failed Get Potency. No Possibility : {advClass}");
+
             }
 
             int totalWeight = potencyPossibilies.Sum(data => data.Weight);

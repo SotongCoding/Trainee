@@ -2,7 +2,11 @@ using SotongStudio.Trainee.Shared.Adventure.Status;
 
 namespace SotongStudio.Trainee.Service.TrainigCalculator
 {
-    public class TrainingCalculateResult : IAdventureStatus
+    public interface ITrainingResult : IAdventureStatus
+    {
+
+    }
+    public class TrainingCalculateResult : ITrainingResult
     {
         public ushort Health { get; private set; }
 

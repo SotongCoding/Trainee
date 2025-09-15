@@ -1,4 +1,4 @@
-using UnityEngine;
+using SotongStudio.Trainee.Service.TrainigCalculator;
 
 namespace SotongStudio.Trainee.Shared.Adventure.Status
 {
@@ -40,6 +40,21 @@ namespace SotongStudio.Trainee.Shared.Adventure.Status
         public AdventureTrainingStatus() : this(0, 0, 0, 0, 0, 0, 0, 0)
         {
 
+        }
+
+        public void AddStatus(ITrainingResult trainingResult)
+        {
+            Health += trainingResult.Health;
+
+            PysAttack += trainingResult.PysAttack;
+            PysDefense += trainingResult.PysDefense;
+
+            MgcAttack += trainingResult.MgcAttack;
+            MgcDefense += trainingResult.MgcDefense;
+
+            Accuracy += trainingResult.Accuracy;
+            Speed += trainingResult.Speed;
+            Critical += trainingResult.Critical;
         }
     }
 }

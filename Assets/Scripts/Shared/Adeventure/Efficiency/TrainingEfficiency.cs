@@ -1,3 +1,4 @@
+using System;
 using SotongStudio.Trainee.Shared.Adventure.Potency;
 
 namespace SotongStudio.Trainee.Shared.Adventure.Efficiency
@@ -53,6 +54,21 @@ namespace SotongStudio.Trainee.Shared.Adventure.Efficiency
                                       potency.CriticalPotency, potency.SpeedPotency, potency.AccuracyPotency)
         {
 
+        }
+
+        internal void ReduceEfficient(ITrainingEfficiency decrementEfficient)
+        {
+            HealthEfficiency -= decrementEfficient.HealthEfficiency;
+
+            PysAttackEfficiency -= decrementEfficient.PysAttackEfficiency;
+            PysDefenseEfficiency -= decrementEfficient.PysDefenseEfficiency;
+
+            MgcAttackEfficiency -= decrementEfficient.MgcAttackEfficiency;
+            MgcDefenseEfficiency -= decrementEfficient.MgcDefenseEfficiency;
+
+            AccuracyEfficiency -= decrementEfficient.AccuracyEfficiency;
+            SpeedEfficiency -= decrementEfficient.SpeedEfficiency;
+            CriticalEfficiency -= decrementEfficient.CriticalEfficiency;
         }
     }
 }

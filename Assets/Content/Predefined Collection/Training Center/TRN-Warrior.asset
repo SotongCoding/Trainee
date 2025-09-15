@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 017a76afc82f45b4eae93731c044a1fa, type: 3}
-  m_Name: TRN_Warrior
+  m_Name: TRN-Warrior
   m_EditorClassIdentifier: Assembly-CSharp::SotongStudio.Trainee.Shared.Predifined.Training.TrainingConfigSO
-  TrainingId: TRN_001
+  TrainingId: TRN-Warrior
   IncrementStat:
     <Health>k__BackingField: 2
     <PysAttack>k__BackingField: 3
