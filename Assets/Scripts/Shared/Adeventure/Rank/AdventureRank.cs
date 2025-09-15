@@ -8,6 +8,6 @@ namespace SotongStudio.Trainee.Shared.Adventure.Rank
         B_Class = 3,
         A_Class = 4,
         S_Class = 5,
-        Yusha_Class = 6,
+        Yuusha_Class = 6,
     }
 }

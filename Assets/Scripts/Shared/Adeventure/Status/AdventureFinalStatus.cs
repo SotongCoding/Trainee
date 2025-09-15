@@ -1,56 +1,27 @@
+using SotongStudio.Trainee.Service.StatusCalculator;
+
 namespace SotongStudio.Trainee.Shared.Adventure.Status
 {
     public class AdventureFinalStatus : IAdventureStatus
     {
-        public ushort Health { get; private set; }
+        private readonly AdventureMainStatus _mainStatus;
+        private readonly AdventureTrainingStatus _trainingStatus;
 
-        public ushort PysAttack { get; private set; }
 
-        public ushort PysDefense { get; private set; }
+        public ushort Health => StatusCalculator.SumAdventureStatus(_mainStatus, _trainingStatus).Health;
+        public ushort PysAttack => StatusCalculator.SumAdventureStatus(_mainStatus, _trainingStatus).PysAttack;
+        public ushort PysDefense => StatusCalculator.SumAdventureStatus(_mainStatus, _trainingStatus).PysDefense;
+        public ushort MgcAttack => StatusCalculator.SumAdventureStatus(_mainStatus, _trainingStatus).MgcAttack;
+        public ushort MgcDefense => StatusCalculator.SumAdventureStatus(_mainStatus, _trainingStatus).MgcDefense;
+        public ushort Critical => StatusCalculator.SumAdventureStatus(_mainStatus, _trainingStatus).Critical;
+        public ushort Speed => StatusCalculator.SumAdventureStatus(_mainStatus, _trainingStatus).Speed;
+        public ushort Accuracy => StatusCalculator.SumAdventureStatus(_mainStatus, _trainingStatus).Accuracy;
 
-        public ushort MgcAttack { get; private set; }
-
-        public ushort MgcDefense { get; private set; }
-
-        public ushort Critical { get; private set; }
-
-        public ushort Speed { get; private set; }
-
-        public ushort Accuracy { get; private set; }
-
-        public AdventureFinalStatus(ushort health,
-
-                                   ushort pysAttack, ushort pysDefense,
-                                   ushort mgcAttack, ushort mgcDefense,
-
-                                   ushort critical, ushort speed, ushort accuracy)
+        public AdventureFinalStatus(AdventureMainStatus mainStatus, 
+                                    AdventureTrainingStatus trainingStatus)
         {
-            Health = health;
-
-            PysAttack = pysAttack;
-            PysDefense = pysDefense;
-            
-            MgcAttack = mgcAttack;
-            MgcDefense = mgcDefense;
-            
-            Critical = critical;
-            Speed = speed;
-            Accuracy = accuracy;
-        }
-
-        public AdventureFinalStatus(IAdventureStatus adventureStatus)
-        {
-            Health = adventureStatus.Health;
-            
-            PysAttack = adventureStatus.PysAttack;
-            PysDefense = adventureStatus.PysDefense;
-
-            MgcAttack = adventureStatus.MgcAttack;
-            MgcDefense = adventureStatus.MgcDefense;
-
-            Critical = adventureStatus.Critical;
-            Speed = adventureStatus.Speed;
-            Accuracy = adventureStatus.Accuracy;
+            _mainStatus = mainStatus;
+            _trainingStatus = trainingStatus;
         }
     }
 }

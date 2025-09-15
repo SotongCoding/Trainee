@@ -1,8 +1,8 @@
-using UnityEngine;
+using SotongStudio.Trainee.Shared.Adventure.Status;
 
-namespace SotongStudio.Trainee.Shared.Adventure.Status
+namespace SotongStudio.Trainee.Service.TrainigCalculator
 {
-    public class AdventureTrainingStatus : IAdventureStatus
+    public class TrainingCalculateResult : IAdventureStatus
     {
         public ushort Health { get; private set; }
 
@@ -20,7 +20,7 @@ namespace SotongStudio.Trainee.Shared.Adventure.Status
 
         public ushort Accuracy { get; private set; }
 
-        public AdventureTrainingStatus(ushort health,
+        public TrainingCalculateResult(ushort health,
 
                                    ushort pysAttack, ushort pysDefense,
                                    ushort mgcAttack, ushort mgcDefense,
@@ -35,11 +35,6 @@ namespace SotongStudio.Trainee.Shared.Adventure.Status
             Critical = critical;
             Speed = speed;
             Accuracy = accuracy;
-        }
-
-        public AdventureTrainingStatus() : this(0, 0, 0, 0, 0, 0, 0, 0)
-        {
-
         }
     }
 }

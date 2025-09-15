@@ -4,6 +4,7 @@ using SotongStudio.SharedData.PlayerCollection;
 using SotongStudio.SharedData.PredefinedData;
 using SotongStudio.VContainer;
 using UnityEngine;
+using UnityEngine.Pool;
 using VContainer;
 using VContainer.Unity;
 
@@ -46,7 +47,9 @@ namespace SotongStudio.Plugins.DI
         private void GetPredefineCollection()
         {
             var folderPath = Application.dataPath + "/Content/Predefined Collection";
-            string[] files = System.IO.Directory.GetFiles(folderPath, "* Collection.asset", System.IO.SearchOption.AllDirectories);
+            using var _ = ListPool<string>.Get(out var files);
+            files.AddRange(System.IO.Directory.GetFiles(folderPath, "*.asset", System.IO.SearchOption.AllDirectories));
+            SpecifiedFile(files);
 
             _predefinedCollection.Clear();
             foreach (var file in files)
@@ -58,6 +61,22 @@ namespace SotongStudio.Plugins.DI
                 if (asset != null)
                     _predefinedCollection.Add(asset);
 
+            }
+        }
+
+        private void SpecifiedFile( List<string> files)
+        {
+            using var _ = ListPool<string>.Get(out var tempFiles);
+            tempFiles.AddRange(files);
+
+            foreach (var item in tempFiles)
+            {
+                var parts = item.Split('/', '\\');
+
+                if (!parts[parts.Length-1].Contains("Collection"))
+                {
+                    files.Remove(item);
+                }
             }
         }
 #endif

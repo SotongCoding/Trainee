@@ -11,7 +11,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9cf4d8df1d704d5689f3c69bd70d1cb9, type: 3}
   m_Name: VContainerSettings
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier: VContainer::VContainer.Unity.VContainerSettings
   RootLifetimeScope: {fileID: 4279280267627685846, guid: 61f765a62d26c4967b49b2dd99857243, type: 3}
   EnableDiagnostics: 1
   DisableScriptModifier: 0

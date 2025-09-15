@@ -5,6 +5,7 @@ using SotongStudio.Trainee.Shared.Adventure.Class;
 using SotongStudio.Trainee.Shared.Adventure.Rank;
 using SotongStudio.Trainee.Shared.Adventure.Status;
 using SotongStudio.Trainee.Shared.Predifined.ClassConfig;
+using SotongStudio.Trainee.Shared.Predifined.Rank.Potency;
 using UnityEngine;
 
 namespace SotongStudio.Trainee
@@ -19,11 +20,7 @@ namespace SotongStudio.Trainee
         [SerializeField] private TestingStat _baseStat;
 
         [SerializeField] private ClassConfigCollection_SO _classConfigCollection;
-
-
-
-
-
+        [SerializeField] private RankPotencyConfig_SO _rankPotencyConfig;
 
         [Button]
         private void AddExperience()
@@ -58,7 +55,7 @@ namespace SotongStudio.Trainee
         [Button]
         private void TestGeneratePotency()
         {
-            var generator = new PotencyGeneratorService(_classConfigCollection);
+            var generator = new PotencyGeneratorService(_classConfigCollection, _rankPotencyConfig);
 
             var potency = generator.GeneratePotency(AdventureRank.E_Class, AdventureClass.BladeMaster);
 
