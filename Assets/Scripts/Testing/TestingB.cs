@@ -2,7 +2,6 @@ using NaughtyAttributes;
 using SotongStudio.Trainee.Gameplay.Training;
 using SotongStudio.Trainee.Service.AdventureGenerator;
 using SotongStudio.Trainee.Shared.Adventure.Data;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 using VContainer;
 
@@ -76,14 +75,32 @@ namespace SotongStudio.Trainee
         [Button]
         private void SimulateTraining()
         {
+            _trainingService.TrainingAdventure("TRN-Warrior");
             var metaData = _advetureMetaDataService.GetAdventureMetaData();
-            _trainingService.DoTraining(metaData, "TRN-Warrior");
 
             Debug.Log($"Training Result : " +
                                       $"Health {metaData.Statuses.FinalStatus.Health} " +
                                       $"PysAttack {metaData.Statuses.FinalStatus.PysAttack} PysDefense {metaData.Statuses.FinalStatus.PysDefense} " +
                                       $"MgcAttack {metaData.Statuses.FinalStatus.MgcAttack} MgcDefense {metaData.Statuses.FinalStatus.MgcDefense} " +
                                       $"Critical {metaData.Statuses.FinalStatus.Critical} Speed {metaData.Statuses.FinalStatus.Speed} Accuracy {metaData.Statuses.FinalStatus.Accuracy}");
+            Debug.Log($"Efficiency Result : " +
+                                     $"Health {metaData.TrainingEfficiency.HealthEfficiency} " +
+                                     $"PysAttack {metaData.TrainingEfficiency.PysAttackEfficiency} PysDefense {metaData.TrainingEfficiency.PysDefenseEfficiency} " +
+                                     $"MgcAttack {metaData.TrainingEfficiency.MgcAttackEfficiency} MgcDefense {metaData.TrainingEfficiency.MgcDefenseEfficiency} " +
+                                     $"Critical {metaData.TrainingEfficiency.CriticalEfficiency} Speed {metaData.TrainingEfficiency.SpeedEfficiency} Accuracy {metaData.TrainingEfficiency.AccuracyEfficiency}");
+        }
+
+        [Button]
+        private void SimulateRest()
+        {
+            _trainingService.RestAdvenuture();
+            var metaData = _advetureMetaDataService.GetAdventureMetaData();
+
+            Debug.Log($"Rest Result : " +
+                                      $"Health {metaData.TrainingEfficiency.HealthEfficiency} " +
+                                      $"PysAttack {metaData.TrainingEfficiency.PysAttackEfficiency} PysDefense {metaData.TrainingEfficiency.PysDefenseEfficiency} " +
+                                      $"MgcAttack {metaData.TrainingEfficiency.MgcAttackEfficiency} MgcDefense {metaData.TrainingEfficiency.MgcDefenseEfficiency} " +
+                                      $"Critical {metaData.TrainingEfficiency.CriticalEfficiency} Speed {metaData.TrainingEfficiency.SpeedEfficiency} Accuracy {metaData.TrainingEfficiency.AccuracyEfficiency}");
         }
     }
 }

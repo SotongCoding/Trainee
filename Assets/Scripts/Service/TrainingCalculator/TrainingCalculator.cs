@@ -1,5 +1,6 @@
 using SotongStudio.Trainee.Shared.Adventure.Efficiency;
 using SotongStudio.Trainee.Shared.Adventure.Status;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace SotongStudio.Trainee.Service.TrainigCalculator
@@ -32,7 +33,9 @@ namespace SotongStudio.Trainee.Service.TrainigCalculator
             var roundEfficient = Mathf.FloorToInt(currentEfficient);
             float bonusPercentage = (float)roundEfficient * 10 / 100;
 
-            var obtainedStat = incrementStat + (incrementStat * bonusPercentage);
+            var obtainedStat = currentEfficient > 0 ? 
+                               incrementStat + (incrementStat * bonusPercentage) :
+                               0;
 
             return (ushort)Mathf.CeilToInt(obtainedStat);
         }

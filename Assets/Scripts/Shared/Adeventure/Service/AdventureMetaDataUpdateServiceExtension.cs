@@ -15,5 +15,9 @@ namespace SotongStudio.Trainee
         {
             metaData.TrainingEfficiency.ReduceEfficient(decrementEfficient);
         }
+        public static void IncreaseEfficiency(this AdventureMetaData metaData, float incrementEfficient)
+        {
+            metaData.TrainingEfficiency.IncreaseEfficient(incrementEfficient);
+        }
     }
 }
