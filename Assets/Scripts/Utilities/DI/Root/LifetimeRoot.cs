@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using NaughtyAttributes;
 using SotongStudio.SharedData.PlayerCollection;
 using SotongStudio.SharedData.PredefinedData;
+using SotongStudio.Trainee;
 using SotongStudio.VContainer;
 using UnityEngine;
 using UnityEngine.Pool;
@@ -20,6 +21,8 @@ namespace SotongStudio.Plugins.DI
             InternalConfigure(builder);
 
             builder.RegisterPlayerCollection();
+
+            AdditionalRegistration(builder);
         }
 
         private void InternalConfigure(IContainerBuilder builder)
@@ -34,6 +37,12 @@ namespace SotongStudio.Plugins.DI
             }
 
             VContainerDIInstallerUtils.RegisterMonoBehaviourComponents(builder, _gameObject);
+        }
+
+        private static void AdditionalRegistration(IContainerBuilder builder)
+        {
+            builder.RegisterAdverntureServiceDI();
+            builder.RegisterTrainingServiceDI();
         }
 
         #region Get Predefined Data Helper

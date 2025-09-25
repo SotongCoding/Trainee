@@ -1,5 +1,6 @@
 using NaughtyAttributes;
 using SotongStudio.Trainee.Gameplay.Training;
+using SotongStudio.Trainee.Gameplay.Training.Screen;
 using SotongStudio.Trainee.Service.AdventureGenerator;
 using SotongStudio.Trainee.Shared.Adventure.Data;
 using UnityEngine;
@@ -12,6 +13,9 @@ namespace SotongStudio.Trainee
 
         [SerializeField] private AdventureGenerator _adventureGenerator;
         [SerializeField] private IAdventureMetaDataService _advetureMetaDataService;
+        [SerializeField] private IAdventureMetaDatUpdateService _advetureMetaUpdateDataService;
+
+        private ITrainingController _trainingController;
         private IObjectResolver _resolver;
         private ITrainingService _trainingService;
 
@@ -19,12 +23,17 @@ namespace SotongStudio.Trainee
         private void Inject(IObjectResolver resolver,
                             AdventureGenerator adventureGenerator,
                             IAdventureMetaDataService adventureMetaDataService,
-                            ITrainingService trainingService)
+                            IAdventureMetaDatUpdateService adventureMetaDataUpdateService,
+                            ITrainingService trainingService,
+                            ITrainingController trainingController)
         {
             _resolver = resolver;
             _adventureGenerator = adventureGenerator;
             _advetureMetaDataService = adventureMetaDataService;
+            _advetureMetaUpdateDataService = adventureMetaDataUpdateService;
             _trainingService = trainingService;
+            _trainingController = trainingController;
+            
 
         }
 
@@ -36,10 +45,11 @@ namespace SotongStudio.Trainee
         }
 
         [Button]
-        private void SimulateCreateEnemy()
+        private void SimulateCreateAdventure()
         {
             var adventure = _adventureGenerator.CreateAdventureMetaData();
-            _advetureMetaDataService.SetAdventureData(adventure);
+            Debug.Log($"{adventure}");
+            _advetureMetaUpdateDataService.SetAdventureData(adventure);
 
             var generatedAdventure = _advetureMetaDataService.GetAdventureMetaData();
 
@@ -75,7 +85,7 @@ namespace SotongStudio.Trainee
         [Button]
         private void SimulateTraining()
         {
-            _trainingService.TrainingAdventure("TRN-Warrior");
+            _trainingController.SetupTraining("TRN-Warrior");
             var metaData = _advetureMetaDataService.GetAdventureMetaData();
 
             Debug.Log($"Training Result : " +

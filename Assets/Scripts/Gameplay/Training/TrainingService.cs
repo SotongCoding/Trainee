@@ -10,6 +10,8 @@ namespace SotongStudio.Trainee.Gameplay.Training
     {
         void TrainingAdventure(string trainingId);
         void RestAdvenuture();
+
+        ITrainingResult PredictTrainingResult(string trainingId);
     }
     public class TrainingService : ITrainingService
     {
@@ -33,15 +35,26 @@ namespace SotongStudio.Trainee.Gameplay.Training
         public void TrainingAdventure(string trainingId)
         {
             var adventure = _adventureMetaData.GetAdventureMetaData();
-            var trainingConfig = _trainingCollection.GetItem(trainingId);
 
-            var increment = trainingConfig.IncrementStat;
+            var trainingConfig = _trainingCollection.GetItem(trainingId);
             var reduceEfficient = trainingConfig.EfficiencyReducement;
 
-            var trainingResult = TrainingCalculator.CalculateObtainedStat(increment, adventure.TrainingEfficiency);
+            var trainingResult = PredictTrainingResult(trainingId);
 
             adventure.AddTrainingStatus(trainingResult);
             adventure.DecreaseEfficiency(reduceEfficient);
+        }
+        
+        public ITrainingResult PredictTrainingResult(string trainingId)
+        {
+            var adventure = _adventureMetaData.GetAdventureMetaData();
+
+            var trainingConfig = _trainingCollection.GetItem(trainingId);
+            var increment = trainingConfig.IncrementStat;
+
+            var trainingResult = TrainingCalculator.CalculateObtainedStat(increment, adventure.TrainingEfficiency);
+            
+            return trainingResult;
         }
     }
 }

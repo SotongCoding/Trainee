@@ -2,12 +2,16 @@ using UnityEngine;
 
 namespace SotongStudio.Trainee.Shared.Adventure.Data
 {
-    public interface IAdventureMetaDataService
+    public interface IAdventureMetaDatUpdateService
     {
         void SetAdventureData(AdventureMetaData metaData);
+    }
+
+    public interface IAdventureMetaDataService
+    {
         AdventureMetaData GetAdventureMetaData();
     }
-    public class AdventureMetaDataService : IAdventureMetaDataService
+    public class AdventureMetaDataService : IAdventureMetaDataService, IAdventureMetaDatUpdateService
     {
         private AdventureMetaData _currentAdventure;
 
