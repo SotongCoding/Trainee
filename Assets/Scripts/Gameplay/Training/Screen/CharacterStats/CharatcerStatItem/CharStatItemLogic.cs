@@ -54,8 +54,6 @@ namespace SotongStudio.Trainee.Gameplay.Training.Screen
         {
             var currentEfficiency = _dataService.GetCurrentEfficiency(_handledData.HandledStatus);
             _efficiencyView.UpdateEfficiencyValue(currentEfficiency);
-
-            Debug.Log($"Current Efficient {_handledData.HandledStatus}: {currentEfficiency}");
         }
     }
 }

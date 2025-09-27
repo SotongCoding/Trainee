@@ -12,6 +12,7 @@ namespace SotongStudio.Trainee.Shared.Predifined.Training
         private string TrainingId;
         public IncrementStat IncrementStat;
         public ReduceEfficiency EfficiencyReducement;
+        public ushort Experience;
 
         public override string ItemId => TrainingId;    
     }

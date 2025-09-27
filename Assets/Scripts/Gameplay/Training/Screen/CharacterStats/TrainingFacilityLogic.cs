@@ -10,6 +10,7 @@ namespace SotongStudio.Trainee.Gameplay.Training.Screen
         void UpdateStatNumber();
         void ShowPredictObtainStat();
         void Hide();
+        void HidePredictObtainedStat();
     }
 
     public interface ITrainingFacilityPlayerAction
@@ -64,6 +65,14 @@ namespace SotongStudio.Trainee.Gameplay.Training.Screen
                 stat.ShowPredictedIncrement();
             }
         }
+        public void HidePredictObtainedStat()
+        {
+            foreach (var stat in _charStats)
+            {
+                stat.HidePredictedIncrement();
+            }
+        }
+
         public void UpdateStatNumber()
         {
             foreach (var stat in _charStats)

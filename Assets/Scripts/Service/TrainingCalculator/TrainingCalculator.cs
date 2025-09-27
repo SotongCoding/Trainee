@@ -1,13 +1,13 @@
 using SotongStudio.Trainee.Shared.Adventure.Efficiency;
 using SotongStudio.Trainee.Shared.Adventure.Status;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace SotongStudio.Trainee.Service.TrainigCalculator
 {
     public static class TrainingCalculator
     {
-        public static ITrainingResult CalculateObtainedStat(IAdventureStatus incrementStat, ITrainingEfficiency currentTrainingEfficient)
+        public static ITrainingResult CalculateObtainedStat(IAdventureStatus incrementStat, ITrainingEfficiency currentTrainingEfficient,
+                                                            ushort experience)
         {
             var health = CalculateSingleStat(incrementStat.Health, currentTrainingEfficient.HealthEfficiency);
 
@@ -25,7 +25,8 @@ namespace SotongStudio.Trainee.Service.TrainigCalculator
             return new TrainingCalculateResult(health,
                                               psyAttack, pysDefense,
                                               mgcAttack, mgcDefense,
-                                              critical, speed, accuracy);
+                                              critical, speed, accuracy,
+                                              experience);
         }
 
         private static ushort CalculateSingleStat(ushort incrementStat, float currentEfficient)
@@ -33,9 +34,8 @@ namespace SotongStudio.Trainee.Service.TrainigCalculator
             var roundEfficient = Mathf.FloorToInt(currentEfficient);
             float bonusPercentage = (float)roundEfficient * 10 / 100;
 
-            var obtainedStat = currentEfficient > 0 ? 
-                               incrementStat + (incrementStat * bonusPercentage) :
-                               0;
+            var obtainedStat = incrementStat + (incrementStat * bonusPercentage);
+            if (currentEfficient <= 0) obtainedStat = 0;
 
             return (ushort)Mathf.CeilToInt(obtainedStat);
         }

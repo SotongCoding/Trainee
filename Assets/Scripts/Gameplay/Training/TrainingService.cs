@@ -43,6 +43,7 @@ namespace SotongStudio.Trainee.Gameplay.Training
 
             adventure.AddTrainingStatus(trainingResult);
             adventure.DecreaseEfficiency(reduceEfficient);
+            adventure.AddExperience(trainingResult.Experience);
         }
         
         public ITrainingResult PredictTrainingResult(string trainingId)
@@ -52,7 +53,8 @@ namespace SotongStudio.Trainee.Gameplay.Training
             var trainingConfig = _trainingCollection.GetItem(trainingId);
             var increment = trainingConfig.IncrementStat;
 
-            var trainingResult = TrainingCalculator.CalculateObtainedStat(increment, adventure.TrainingEfficiency);
+            var trainingResult = TrainingCalculator.CalculateObtainedStat(increment, adventure.TrainingEfficiency, 
+                                                                          trainingConfig.Experience);
             
             return trainingResult;
         }

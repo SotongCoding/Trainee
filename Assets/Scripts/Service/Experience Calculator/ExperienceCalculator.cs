@@ -22,10 +22,7 @@ namespace SotongStudio.Trainee.Service.ExperienceCalculator
                 tempHoldExp -= _levelUpExperience;
                 getLevelAmount++;
 
-                Debug.Log($"Calculate Result 1 : {tempHoldExp}");
-
                 tempHoldExp = (ushort)(tempHoldExp * 0.85f);
-                Debug.Log($"Calculate Result 2 : {tempHoldExp}");
             }
 
             return new ExperienceCalculateResult(getLevelAmount, tempHoldExp);

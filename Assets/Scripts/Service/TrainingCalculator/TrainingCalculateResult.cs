@@ -4,7 +4,7 @@ namespace SotongStudio.Trainee.Service.TrainigCalculator
 {
     public interface ITrainingResult : IAdventureStatus
     {
-
+        ushort Experience { get; }
     }
     public class TrainingCalculateResult : ITrainingResult
     {
@@ -24,12 +24,17 @@ namespace SotongStudio.Trainee.Service.TrainigCalculator
 
         public ushort Accuracy { get; private set; }
 
+
+        public ushort Experience { get; private set; }
+
         public TrainingCalculateResult(ushort health,
 
                                    ushort pysAttack, ushort pysDefense,
                                    ushort mgcAttack, ushort mgcDefense,
 
-                                   ushort critical, ushort speed, ushort accuracy)
+                                   ushort critical, ushort speed, ushort accuracy,
+
+                                   ushort experience)
         {
             Health = health;
             PysAttack = pysAttack;
@@ -39,6 +44,8 @@ namespace SotongStudio.Trainee.Service.TrainigCalculator
             Critical = critical;
             Speed = speed;
             Accuracy = accuracy;
+
+            Experience = experience;
         }
     }
 }

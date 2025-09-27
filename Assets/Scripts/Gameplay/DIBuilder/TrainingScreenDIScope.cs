@@ -22,7 +22,7 @@ namespace SotongStudio.Trainee.Gameplay.Training.Screen.CharacterStat
                    .WithParameter<ITrainingFacilityView>(_charStatView)
                    .WithParameter<IReadOnlyList<ICharacterStatItemLogic>>(_charStatItems);
 
-            builder.Register<TrainingController>(Lifetime.Singleton).As<ITrainingController>();
+            builder.Register<TrainingFacilityController>(Lifetime.Singleton).As<ITrainingFacilityController>();
             builder.RegisterEntryPoint<TrainingCoordinator>(Lifetime.Singleton)
                     .As<IStartable>();
 

@@ -1,8 +1,6 @@
-using UnityEngine;
-
 namespace SotongStudio.Trainee.Gameplay.Training.Screen
 {
-    public interface ITrainingController
+    public interface ITrainingFacilityController
     {
         void SetupTraining(string trainingId);
 
@@ -12,7 +10,7 @@ namespace SotongStudio.Trainee.Gameplay.Training.Screen
         void UpdateTrainingStatVisual();
 
     }
-    public class TrainingController : ITrainingController
+    public class TrainingFacilityController : ITrainingFacilityController
     {
         private readonly ITrainingFacilityDataUpdateService _dataUpdateService;
         private readonly ITrainingFacilityDataService _dataService;
@@ -20,7 +18,7 @@ namespace SotongStudio.Trainee.Gameplay.Training.Screen
 
         private readonly ITrainingFacilityLogic _trainingFacility;
 
-        public TrainingController(ITrainingFacilityDataUpdateService dataUpdateService,
+        public TrainingFacilityController(ITrainingFacilityDataUpdateService dataUpdateService,
                                   ITrainingFacilityDataService dataService,
                                   ITrainingService trainingService,
                                   ITrainingFacilityLogic trainingFacility)
@@ -34,28 +32,31 @@ namespace SotongStudio.Trainee.Gameplay.Training.Screen
         public void SetupTraining(string trainingId)
         {
             _dataUpdateService.SetCurrentTraining(trainingId);
+            
+            UpdateTrainingStatVisual();
         }
 
         public void ShowPredictionStatIncrease()
         {
             _dataUpdateService.UpdatePredictionTraining();
-            Debug.Log("Do Predict Stat");
             _trainingFacility.ShowPredictObtainStat();
         }
         public void TrainingProcess()
         {
-            if (_dataService.IsTrainingSetupDone)
+            if (!_dataService.IsTrainingSetupDone)
             {
-                Debug.Log("Do Training");
-                _trainingService.TrainingAdventure(_dataService.CurrentTrainingId);
+                return;
             }
 
+            _trainingService.TrainingAdventure(_dataService.CurrentTrainingId);
+            
             UpdateTrainingStatVisual();
         }
 
         public void UpdateTrainingStatVisual()
         {
             _trainingFacility.UpdateStatNumber();
+            _trainingFacility.HidePredictObtainedStat();
         }
     }
 }

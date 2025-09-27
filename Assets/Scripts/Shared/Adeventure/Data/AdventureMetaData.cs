@@ -1,6 +1,9 @@
+using System;
 using Newtonsoft.Json;
+using SotongStudio.Trainee.Service.ExperienceCalculator;
 using SotongStudio.Trainee.Shared.Adventure.Class;
 using SotongStudio.Trainee.Shared.Adventure.Efficiency;
+using SotongStudio.Trainee.Shared.Adventure.Experience;
 using SotongStudio.Trainee.Shared.Adventure.Potency;
 using SotongStudio.Trainee.Shared.Adventure.Rank;
 using SotongStudio.Trainee.Shared.Adventure.Status;
@@ -15,6 +18,7 @@ namespace SotongStudio.Trainee.Shared.Adventure.Data
         public AdventureStatuses Statuses;
         public AdventurePotency Potency;
         public TrainingEfficiency TrainingEfficiency;
+        public AdventureExperience Experience;
 
         public AdventureMetaData(
                                  AdventureRank rank,
@@ -26,9 +30,12 @@ namespace SotongStudio.Trainee.Shared.Adventure.Data
             Rank = rank;
             JobClass = jobClass;
 
-            Statuses = new(baseStatus);
+            Experience = new();
+            
             Potency = potency;
             TrainingEfficiency = trainingEfficiency;
+            
+            Statuses = new(baseStatus, Experience);
         }
     }
 
@@ -53,11 +60,11 @@ namespace SotongStudio.Trainee.Shared.Adventure.Data
         }
 
         
-        public AdventureStatuses(AdventureBaseStatus baseStatus)
+        public AdventureStatuses(AdventureBaseStatus baseStatus, AdventureExperience experience)
         {
             BaseStatus = baseStatus;
 
-            MainStatus = new(baseStatus);
+            MainStatus = new(baseStatus, experience);
             TrainingStatus = new();
             FinalStatus = new(MainStatus, TrainingStatus);
         }

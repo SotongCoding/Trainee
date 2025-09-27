@@ -2,6 +2,7 @@ using NaughtyAttributes;
 using SotongStudio.Trainee.Service.ExperienceCalculator;
 using SotongStudio.Trainee.Service.PotencyGenerator;
 using SotongStudio.Trainee.Shared.Adventure.Class;
+using SotongStudio.Trainee.Shared.Adventure.Experience;
 using SotongStudio.Trainee.Shared.Adventure.Rank;
 using SotongStudio.Trainee.Shared.Adventure.Status;
 using SotongStudio.Trainee.Shared.Predifined.ClassConfig;
@@ -42,8 +43,7 @@ namespace SotongStudio.Trainee
                                                        _baseStat.PysAttack, _baseStat.PysDefense,
                                                        _baseStat.MgcAttack, _baseStat.MgcDefense,
                                                        _baseStat.Critical, _baseStat.Speed, _baseStat.Accuracy);
-                var mainStat = new AdventureMainStatus(baseStat);
-                mainStat.ChangeLevel(level);
+                var mainStat = new AdventureMainStatus(baseStat, new AdventureExperience());
                 Debug.Log($"Level {level} Stat : " +
                                       $"Health {mainStat.Health} " +
                                       $"PysAttack {mainStat.PysAttack} PysDefense {mainStat.PysDefense} " +

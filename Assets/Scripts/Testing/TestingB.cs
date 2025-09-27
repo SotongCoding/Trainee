@@ -15,7 +15,7 @@ namespace SotongStudio.Trainee
         [SerializeField] private IAdventureMetaDataService _advetureMetaDataService;
         [SerializeField] private IAdventureMetaDatUpdateService _advetureMetaUpdateDataService;
 
-        private ITrainingController _trainingController;
+        private ITrainingFacilityController _trainingController;
         private IObjectResolver _resolver;
         private ITrainingService _trainingService;
 
@@ -25,7 +25,7 @@ namespace SotongStudio.Trainee
                             IAdventureMetaDataService adventureMetaDataService,
                             IAdventureMetaDatUpdateService adventureMetaDataUpdateService,
                             ITrainingService trainingService,
-                            ITrainingController trainingController)
+                            ITrainingFacilityController trainingController)
         {
             _resolver = resolver;
             _adventureGenerator = adventureGenerator;
@@ -87,8 +87,8 @@ namespace SotongStudio.Trainee
         {
             _trainingController.SetupTraining("TRN-Warrior");
             var metaData = _advetureMetaDataService.GetAdventureMetaData();
-
-            Debug.Log($"Training Result : " +
+            Debug.Log($"Rank {metaData.Rank}\n Class {metaData.JobClass} \n Level : {metaData.Experience.Level}");
+          Debug.Log($"Training Result : " +
                                       $"Health {metaData.Statuses.FinalStatus.Health} " +
                                       $"PysAttack {metaData.Statuses.FinalStatus.PysAttack} PysDefense {metaData.Statuses.FinalStatus.PysDefense} " +
                                       $"MgcAttack {metaData.Statuses.FinalStatus.MgcAttack} MgcDefense {metaData.Statuses.FinalStatus.MgcDefense} " +
