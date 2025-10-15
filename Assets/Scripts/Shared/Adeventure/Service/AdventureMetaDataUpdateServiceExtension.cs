@@ -7,21 +7,21 @@ namespace SotongStudio.Trainee
 {
     public static class AdventureMetaDataUpdateServiceExtension
     {
-        public static void AddTrainingStatus(this AdventureMetaData metaData, ITrainingResult trainingResult)
+        public static void AddTrainingStatus(this IAdventureMetaData metaData, ITrainingResult trainingResult)
         {
             metaData.Statuses.TrainingStatus.AddStatus(trainingResult);
         }
 
-        public static void DecreaseEfficiency(this AdventureMetaData metaData, ITrainingEfficiency decrementEfficient)
+        public static void DecreaseEfficiency(this IAdventureMetaData metaData, ITrainingEfficiency decrementEfficient)
         {
             metaData.TrainingEfficiency.ReduceEfficient(decrementEfficient);
         }
-        public static void IncreaseEfficiency(this AdventureMetaData metaData, float incrementEfficient)
+        public static void IncreaseEfficiency(this IAdventureMetaData metaData, float incrementEfficient)
         {
             metaData.TrainingEfficiency.IncreaseEfficient(incrementEfficient);
         }
 
-        public static void AddExperience(this AdventureMetaData metaData, ushort obtainedExp)
+        public static void AddExperience(this IAdventureMetaData metaData, ushort obtainedExp)
         {
             var experienceResult = ExperienceCalculator.CalculateExperience(metaData.Experience.ExpPoint, obtainedExp);
 

@@ -1,6 +1,7 @@
+using Cysharp.Threading.Tasks;
 using NaughtyAttributes;
-using SotongStudio.Trainee.Gameplay.Training;
-using SotongStudio.Trainee.Gameplay.Training.Screen;
+using SotongStudio.Trainee.Gameplay.Facility.Training;
+using SotongStudio.Trainee.Gameplay.Facility.Training.Screen;
 using SotongStudio.Trainee.Service.AdventureGenerator;
 using SotongStudio.Trainee.Shared.Adventure.Data;
 using UnityEngine;
@@ -12,7 +13,7 @@ namespace SotongStudio.Trainee
     {
 
         [SerializeField] private AdventureGenerator _adventureGenerator;
-        [SerializeField] private IAdventureMetaDataService _advetureMetaDataService;
+        [SerializeField] private IAdventureMetaDataProvider _advetureMetaDataProvider;
         [SerializeField] private IAdventureMetaDatUpdateService _advetureMetaUpdateDataService;
 
         private ITrainingFacilityController _trainingController;
@@ -22,14 +23,14 @@ namespace SotongStudio.Trainee
         [Inject]
         private void Inject(IObjectResolver resolver,
                             AdventureGenerator adventureGenerator,
-                            IAdventureMetaDataService adventureMetaDataService,
+                            IAdventureMetaDataProvider adventureMetaDataService,
                             IAdventureMetaDatUpdateService adventureMetaDataUpdateService,
                             ITrainingService trainingService,
                             ITrainingFacilityController trainingController)
         {
             _resolver = resolver;
             _adventureGenerator = adventureGenerator;
-            _advetureMetaDataService = adventureMetaDataService;
+            _advetureMetaDataProvider = adventureMetaDataService;
             _advetureMetaUpdateDataService = adventureMetaDataUpdateService;
             _trainingService = trainingService;
             _trainingController = trainingController;
@@ -41,17 +42,15 @@ namespace SotongStudio.Trainee
         private void ResolveDI()
         {
             _adventureGenerator = _resolver.Resolve<AdventureGenerator>();
-            _advetureMetaDataService = _resolver.Resolve<IAdventureMetaDataService>();
+            _advetureMetaDataProvider = _resolver.Resolve<IAdventureMetaDataProvider>();
         }
 
         [Button]
         private void SimulateCreateAdventure()
         {
-            var adventure = _adventureGenerator.CreateAdventureMetaData();
-            Debug.Log($"{adventure}");
-            _advetureMetaUpdateDataService.SetAdventureData(adventure);
+            _advetureMetaDataProvider.CreateNewAdventure(out var _);
 
-            var generatedAdventure = _advetureMetaDataService.GetAdventureMetaData();
+            var generatedAdventure = _advetureMetaDataProvider.GetAdventureMetaData();
 
             Debug.Log($"Rank {generatedAdventure.Rank}\n Class {generatedAdventure.JobClass}" +
                                       $"\nStat : " +
@@ -85,8 +84,8 @@ namespace SotongStudio.Trainee
         [Button]
         private void SimulateTraining()
         {
-            _trainingController.SetupTraining("TRN-Warrior");
-            var metaData = _advetureMetaDataService.GetAdventureMetaData();
+            _trainingController.SetupTrainingAsync("TRN-Warrior", default).Forget();
+            var metaData = _advetureMetaDataProvider.GetAdventureMetaData();
             Debug.Log($"Rank {metaData.Rank}\n Class {metaData.JobClass} \n Level : {metaData.Experience.Level}");
           Debug.Log($"Training Result : " +
                                       $"Health {metaData.Statuses.FinalStatus.Health} " +
@@ -104,7 +103,7 @@ namespace SotongStudio.Trainee
         private void SimulateRest()
         {
             _trainingService.RestAdvenuture();
-            var metaData = _advetureMetaDataService.GetAdventureMetaData();
+            var metaData = _advetureMetaDataProvider.GetAdventureMetaData();
 
             Debug.Log($"Rest Result : " +
                                       $"Health {metaData.TrainingEfficiency.HealthEfficiency} " +

@@ -7,7 +7,6 @@ using SotongStudio.Trainee.Shared.Adventure.Rank;
 using SotongStudio.Trainee.Shared.Adventure.Status;
 using SotongStudio.Trainee.Shared.Predifined.ClassConfig;
 using SotongStudio.Trainee.Shared.Predifined.Rank.Potency;
-using SotongStudio.Utilities.Enumerable;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -18,21 +17,6 @@ namespace SotongStudio.Trainee.Service.PotencyGenerator
     {
         private readonly PredefinedCollection<ClassConfig_SO> _classConfigCollection;
         private readonly IRankPotencyConfig _rankPotencyConfig;
-
-        private readonly Dictionary<StatusCodex, ushort> _holdedPotencyNumber = new()
-        {
-            {StatusCodex.Health, 0 },
-
-            {StatusCodex.PsyAttack, 0 },
-            {StatusCodex.PsyDefense, 0 },
-
-            {StatusCodex.MgcAttack, 0 },
-            {StatusCodex.MgcDefense, 0 },
-
-            {StatusCodex.Critical, 0 },
-            {StatusCodex.Speed, 0 },
-            {StatusCodex.Accuracy, 0 },
-        };
 
         public PotencyGeneratorService(PredefinedCollection<ClassConfig_SO> classConfigCollection,
                                        IRankPotencyConfig rankPotencyConfig)
@@ -45,37 +29,52 @@ namespace SotongStudio.Trainee.Service.PotencyGenerator
         {
             var potencyAmount = Random.Range(_rankPotencyConfig[rank].MinValue, _rankPotencyConfig[rank].MaxValue + 1);
 
-            _holdedPotencyNumber.ResetValuesOnly();
+            Dictionary<StatusCodex, ushort> holdedPotencyNumber = new()
+        {
+                {StatusCodex.Health, 0 },
+
+                {StatusCodex.PsyAttack, 0 },
+                {StatusCodex.PsyDefense, 0 },
+
+                {StatusCodex.MgcAttack, 0 },
+                {StatusCodex.MgcDefense, 0 },
+
+                {StatusCodex.Critical, 0 },
+                {StatusCodex.Speed, 0 },
+                {StatusCodex.Accuracy, 0 }};
 
             for (int i = 0; i < potencyAmount; i++)
             {
-                var getPotency = GetPotencyPoint(adventureClass);
-                _holdedPotencyNumber[getPotency.Status]++;
+                var getPotency = GetPotencyPoint(adventureClass, holdedPotencyNumber);
+                if (getPotency ==null)
+                {
+                    continue;
+                }
+                holdedPotencyNumber[getPotency.Status]++;
 
             }
 
-            return new AdventurePotency(_holdedPotencyNumber[StatusCodex.Health],
+            return new AdventurePotency(holdedPotencyNumber[StatusCodex.Health],
 
-                                        _holdedPotencyNumber[StatusCodex.PsyAttack],
-                                        _holdedPotencyNumber[StatusCodex.PsyDefense],
+                                        holdedPotencyNumber[StatusCodex.PsyAttack],
+                                        holdedPotencyNumber[StatusCodex.PsyDefense],
 
-                                        _holdedPotencyNumber[StatusCodex.MgcAttack],
-                                        _holdedPotencyNumber[StatusCodex.MgcDefense],
+                                        holdedPotencyNumber[StatusCodex.MgcAttack],
+                                        holdedPotencyNumber[StatusCodex.MgcDefense],
 
-                                        _holdedPotencyNumber[StatusCodex.Critical],
-                                        _holdedPotencyNumber[StatusCodex.Speed],
-                                        _holdedPotencyNumber[StatusCodex.Accuracy]);
+                                        holdedPotencyNumber[StatusCodex.Critical],
+                                        holdedPotencyNumber[StatusCodex.Speed],
+                                        holdedPotencyNumber[StatusCodex.Accuracy]);
         }
 
-        private PotencyWeightValue GetPotencyPoint(AdventureClass advClass)
+        private PotencyWeightValue? GetPotencyPoint(AdventureClass advClass, Dictionary<StatusCodex, ushort> holdedPotencyNumber)
         {
             using var _ = ListPool<PotencyWeightValue>.Get(out var potencyPossibilies);
-            UpdatePossblePotencyList(potencyPossibilies, advClass);
+            UpdatePossblePotencyList(potencyPossibilies, holdedPotencyNumber, advClass);
 
             if (potencyPossibilies.Count == 0)
             {
-                Debug.LogError($"Failed Get Potency. No Possibility : {advClass}");
-
+                return null;
             }
 
             int totalWeight = potencyPossibilies.Sum(data => data.Weight);
@@ -91,22 +90,31 @@ namespace SotongStudio.Trainee.Service.PotencyGenerator
                 }
             }
 
-            // Fallback (seharusnya tidak terjadi)
-            return potencyPossibilies[0];
+            return null;
         }
 
-        private void UpdatePossblePotencyList(List<PotencyWeightValue> potencyPossibilies, AdventureClass advClass)
+        private void UpdatePossblePotencyList(List<PotencyWeightValue> potencyPossibilities, Dictionary<StatusCodex, ushort> holdedPotencyNumber, AdventureClass advClass)
         {
+            potencyPossibilities.Clear();
+
             var selectedData = _classConfigCollection.GetItem(advClass.ToString());
             var potencyData = selectedData.PotencyWeight;
 
-            potencyPossibilies.Clear();
 
             foreach (var potency in potencyData)
             {
-                if (potency.Weight > 0 && _holdedPotencyNumber[potency.Status] < 4)
+                if (potency.Weight > 0)
                 {
-                    potencyPossibilies.Add(potency);
+                    potencyPossibilities.Add(potency);
+                }
+            }
+
+            foreach (var currentPoint in holdedPotencyNumber)
+            {
+                if (currentPoint.Value > 3)
+                {
+                    var data = potencyPossibilities.Find(x => x.Status == currentPoint.Key);
+                    potencyPossibilities.Remove(data);
                 }
             }
         }

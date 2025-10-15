@@ -1,4 +1,4 @@
-using SotongStudio.Trainee.Gameplay.Training;
+using SotongStudio.Trainee.Gameplay.Facility.Training;
 using SotongStudio.Trainee.Service.AdventureGenerator;
 using SotongStudio.Trainee.Service.PotencyGenerator;
 using SotongStudio.Trainee.Shared.Adventure.Data;
@@ -13,7 +13,7 @@ namespace SotongStudio.Trainee
             builder.Register<AdventureGenerator>(Lifetime.Singleton);
             builder.Register<PotencyGeneratorService>(Lifetime.Singleton);
 
-            builder.Register<AdventureMetaDataService>(Lifetime.Singleton).As<IAdventureMetaDataService>();
+            builder.Register<AdventureMetaDataService>(Lifetime.Singleton).As<IAdventureMetaDataProvider>();
             builder.Register<TrainingService>(Lifetime.Singleton).As<ITrainingService>();
 
         }

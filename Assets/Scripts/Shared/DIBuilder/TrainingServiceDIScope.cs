@@ -1,7 +1,6 @@
-using SotongStudio.Trainee.Gameplay.Training;
 using VContainer;
 
-namespace SotongStudio.Trainee
+namespace SotongStudio.Trainee.Gameplay.Facility.Training
 {
     public static class TrainingServiceDIScope 
     {

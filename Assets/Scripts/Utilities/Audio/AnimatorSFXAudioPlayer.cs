@@ -1,7 +1,6 @@
-using SotongStudio.Utilities.AudioSystem;
 using UnityEngine;
 
-namespace SotongStudio.Bomber
+namespace SotongStudio.Utilities.AudioSystem
 {
     public class AnimatorSFXAudioPlayer : MonoBehaviour
     {

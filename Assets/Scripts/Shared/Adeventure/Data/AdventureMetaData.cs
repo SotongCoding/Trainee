@@ -1,6 +1,4 @@
-using System;
 using Newtonsoft.Json;
-using SotongStudio.Trainee.Service.ExperienceCalculator;
 using SotongStudio.Trainee.Shared.Adventure.Class;
 using SotongStudio.Trainee.Shared.Adventure.Efficiency;
 using SotongStudio.Trainee.Shared.Adventure.Experience;
@@ -10,18 +8,17 @@ using SotongStudio.Trainee.Shared.Adventure.Status;
 
 namespace SotongStudio.Trainee.Shared.Adventure.Data
 {
-    public class AdventureMetaData
+    public class AdventureMetaData : IAdventureMetaData
     {
-        public AdventureRank Rank;
-        public AdventureClass JobClass;
+        public AdventureRank Rank { get; private set; }
+        public AdventureClass JobClass {get; private set;}
 
-        public AdventureStatuses Statuses;
-        public AdventurePotency Potency;
-        public TrainingEfficiency TrainingEfficiency;
-        public AdventureExperience Experience;
+        public AdventureStatuses Statuses {get; private set;}
+        public AdventurePotency Potency {get; private set;}
+        public TrainingEfficiency TrainingEfficiency {get; private set;}
+        public AdventureExperience Experience {get; private set;}
 
-        public AdventureMetaData(
-                                 AdventureRank rank,
+        public AdventureMetaData(AdventureRank rank,
                                  AdventureClass jobClass,
                                  AdventureBaseStatus baseStatus,
                                  AdventurePotency potency,
@@ -31,10 +28,10 @@ namespace SotongStudio.Trainee.Shared.Adventure.Data
             JobClass = jobClass;
 
             Experience = new();
-            
+
             Potency = potency;
             TrainingEfficiency = trainingEfficiency;
-            
+
             Statuses = new(baseStatus, Experience);
         }
     }
@@ -49,8 +46,8 @@ namespace SotongStudio.Trainee.Shared.Adventure.Data
 
         [JsonConstructor]
         public AdventureStatuses(AdventureFinalStatus finalStatus,
-                                 AdventureBaseStatus baseStatus, 
-                                 AdventureMainStatus mainStatus, 
+                                 AdventureBaseStatus baseStatus,
+                                 AdventureMainStatus mainStatus,
                                  AdventureTrainingStatus trainingStatus)
         {
             FinalStatus = finalStatus;
@@ -59,7 +56,7 @@ namespace SotongStudio.Trainee.Shared.Adventure.Data
             TrainingStatus = trainingStatus;
         }
 
-        
+
         public AdventureStatuses(AdventureBaseStatus baseStatus, AdventureExperience experience)
         {
             BaseStatus = baseStatus;

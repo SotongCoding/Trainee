@@ -23,7 +23,7 @@ namespace SotongStudio.Trainee.Service.AdventureGenerator
             _randomStatusConfig = randomStatusConfig;
         }
 
-        public AdventureMetaData CreateAdventureMetaData()
+        public AdventureMetaData CreateAdventure()
         {
             var rank = GetAdventureRank(AdventureRank.E_Class, AdventureRank.Yuusha_Class);
             var selectedClass = GetAdventureClass();

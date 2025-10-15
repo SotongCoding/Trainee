@@ -13,7 +13,7 @@ namespace SotongStudio.Trainee
             builder.Register<PotencyGeneratorService>(Lifetime.Singleton);
 
             builder.Register<AdventureMetaDataService>(Lifetime.Singleton)
-                   .As<IAdventureMetaDataService>()
+                   .As<IAdventureMetaDataProvider>()
                    .As<IAdventureMetaDatUpdateService>();
         }
     }

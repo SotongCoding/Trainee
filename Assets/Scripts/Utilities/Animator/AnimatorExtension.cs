@@ -3,7 +3,7 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-namespace SotongStudio.Unlink.Utilities.AnimatorHelper
+namespace SotongStudio.Utilities.AnimatorHelper
 {
     public static class AnimatorExtension
     {

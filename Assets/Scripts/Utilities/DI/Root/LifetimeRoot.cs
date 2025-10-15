@@ -3,6 +3,8 @@ using NaughtyAttributes;
 using SotongStudio.SharedData.PlayerCollection;
 using SotongStudio.SharedData.PredefinedData;
 using SotongStudio.Trainee;
+using SotongStudio.Trainee.Gameplay.Facility.Training;
+using SotongStudio.Utilities.SceneLoader;
 using SotongStudio.VContainer;
 using UnityEngine;
 using UnityEngine.Pool;
@@ -43,6 +45,10 @@ namespace SotongStudio.Plugins.DI
         {
             builder.RegisterAdverntureServiceDI();
             builder.RegisterTrainingServiceDI();
+
+            builder.RegisterVillageRootDI();
+            builder.RegisterTrainingFacilityRootDI();
+            builder.RegisterRecruitRootDI();
         }
 
         #region Get Predefined Data Helper
